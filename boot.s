@@ -1,6 +1,6 @@
 .set ALIGN,        1<<0
 .set MEMINFO,      1<<1
-.set AOUT_KLUDGE,  1<<16          /* Bật cờ AOUT Kludge để QEMU load flat binary */
+.set AOUT_KLUDGE,  1<<16          
 .set FLAGS,        ALIGN | MEMINFO | AOUT_KLUDGE
 .set MAGIC,        0x1BADB002
 .set CHECKSUM,     -(MAGIC + FLAGS)
@@ -11,12 +11,11 @@ multiboot_header:
     .long MAGIC
     .long FLAGS
     .long CHECKSUM
-    /* Các trường AOUT Kludge bắt buộc: */
-    .long multiboot_header        /* Header addr */
-    .long 0x100000                /* Load addr */
-    .long 0                       /* Load end addr (0 = load toàn bộ file) */
-    .long 0                       /* BSS end addr */
-    .long _start                  /* Entry point */
+    .long multiboot_header      
+    .long 0x100000               
+    .long 0                  
+    .long 0                       
+    .long _start                  
 
 .section .bss
 .align 16
@@ -38,4 +37,5 @@ start:
     cli
     hlt
     jmp .loop
+    
     
